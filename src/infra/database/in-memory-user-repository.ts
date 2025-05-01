@@ -3,6 +3,15 @@ import { User } from "../../domain/entities/user";
 
 export class InMemoryUserRepository implements IUserRepository {
   private users: User[] = [];
+  private static INSTANCE: InMemoryUserRepository;
+
+  public static getInstance(): InMemoryUserRepository {
+    if (!InMemoryUserRepository.INSTANCE) {
+      return new InMemoryUserRepository();
+    }
+
+    return InMemoryUserRepository.INSTANCE;
+  }
 
   async create(user: User): Promise<void> {
     this.users.push(user);
